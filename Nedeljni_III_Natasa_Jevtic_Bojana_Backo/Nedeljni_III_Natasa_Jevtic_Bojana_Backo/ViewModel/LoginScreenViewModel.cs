@@ -1,4 +1,6 @@
 ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Commands;
+using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.HelperMethods;
+using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,29 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
     class LoginScreenViewModel : ViewModelBase
     {
         LoginScreen loginScreen;
+        Users users;
 
         public LoginScreenViewModel(LoginScreen loginScreenOpen)
         {
             loginScreen = loginScreenOpen;
+            users = new Users();
         }
         #region Properties
         // 
+        private vwUser user;
+        public vwUser User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                user = value;
+                OnPropertyChanged("User");
+            }
+        }
+
         private string userName;
         public string UserName
         {
@@ -61,9 +79,25 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     loginScreen.Close();
                     master.ShowDialog();
                 }
+                else if (users.IsUser(UserName))
+                {
+                    User = users.FindUser(UserName);
+                    if (SecurePasswordHasher.Verify(password, User.Password))
+                    {
+                        MainWindow managerWindow = new MainWindow();
+                        loginScreen.Close();
+                        managerWindow.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong password!");
+                    }
+                }
                 else
                 {
-                    MessageBox.Show("Wrong usename or password!");
+                    NameAndSurnameView nameAndSurnameView = new NameAndSurnameView(UserName, password);
+                    loginScreen.Close();
+                    nameAndSurnameView.ShowDialog();
                 }
             }
             catch (Exception ex)
