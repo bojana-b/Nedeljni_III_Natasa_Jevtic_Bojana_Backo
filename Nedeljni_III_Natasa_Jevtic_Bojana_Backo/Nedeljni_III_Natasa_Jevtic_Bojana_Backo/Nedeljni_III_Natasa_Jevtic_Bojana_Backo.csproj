@@ -93,6 +93,9 @@
     <Compile Include="tblUser.cs">
       <DependentUpon>RecipesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Validations\NameAndSurnameValidation.cs" />
+    <Compile Include="Validations\NumberOfPersonsValidation.cs" />
+    <Compile Include="Validations\QuantityValidation.cs" />
     <Compile Include="ViewModel\LoginScreenViewModel.cs" />
     <Compile Include="ViewModel\NameAndSurnameViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

@@ -57,26 +57,32 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         }
         private void SaveExecute()
         {
-            try
+            if (String.IsNullOrEmpty(User.NameAndSurname))
             {
-                bool isCreated = users.AddUser(User);
-                if (isCreated)
-                {
-                    MessageBox.Show("Account created!");
-
-                    NameAndSurnameView.Close();
-                }
-                else
-                {
-                    MessageBox.Show("There is no Manager for that floor. Can not hire an employee!");
-                }
+                MessageBox.Show("Please fill a field.", "Notification");
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.ToString());
+                try
+                {
+                    bool isCreated = users.AddUser(User);
+                    if (isCreated)
+                    {
+                        MessageBox.Show("Account created!", "Notification");
+
+                        NameAndSurnameView.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Account cannot be created.", "Notification");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
-
         private bool CanSaveExecute()
         {
             return true;
