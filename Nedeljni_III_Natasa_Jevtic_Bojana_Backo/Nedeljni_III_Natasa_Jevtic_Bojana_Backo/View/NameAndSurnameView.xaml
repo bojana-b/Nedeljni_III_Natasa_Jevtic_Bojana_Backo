@@ -5,14 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
         mc:Ignorable="d"
-        Title="Add Employee" Height="250" Width="300" FontSize="14"
+        xmlns:Validation="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations"
+        Title="Add user" Height="250" Width="300" FontSize="14"
         Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
     <Grid>
         <GroupBox Header="" Margin="10" Padding="10" Background="AntiqueWhite">
             <StackPanel>
                 <TextBlock>Name and Surname:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding User.NameAndSurname, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button  Margin="80, 20" Command="{Binding Save}" CommandParameter="{Binding ElementName=txtPassword}">Save</Button>
+                <TextBox x:Name="btnNameAndSurname"
+                 Validation.ErrorTemplate="{StaticResource errorTemplate}"
+                 Grid.Column="3"
+                 Grid.Row="1"
+                 Foreground="RosyBrown">
+                    <TextBox.Text>
+                        <Binding Path="User.NameAndSurname"
+                         UpdateSourceTrigger="PropertyChanged"
+                         ValidatesOnDataErrors="True"
+                         NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <Validation:NameAndSurnameValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button Margin="80,20"
+                Content="Save" 
+                Command="{Binding Save}"
+                CommandParameter="{Binding ElementName=btnPassword}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=btnNameAndSurname}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
             </StackPanel>
         </GroupBox>

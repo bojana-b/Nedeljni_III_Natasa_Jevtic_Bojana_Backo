@@ -62,7 +62,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 if (submit == null)
                 {
-                    submit = new RelayCommand(SubmitCommandExecute, param => CanSubmitCommandExecute());
+                    submit = new RelayCommand(SubmitCommandExecute, CanSubmitCommandExecute);
                 }
                 return submit;
             }
@@ -105,9 +105,17 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 MessageBox.Show(ex.ToString());
             }
         }
-        private bool CanSubmitCommandExecute()
+        private bool CanSubmitCommandExecute(object obj)
         {
-            return true;
+            string password = (obj as PasswordBox).Password;
+            if (!String.IsNullOrEmpty(UserName) && !String.IsNullOrEmpty(password))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion 
     }
