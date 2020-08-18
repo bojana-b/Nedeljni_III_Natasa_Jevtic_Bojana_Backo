@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Validations\NameAndSurnameValidation.cs" />
     <Compile Include="Validations\NumberOfPersonsValidation.cs" />
+    <Compile Include="Validations\PasswordValidation.cs" />
     <Compile Include="Validations\QuantityValidation.cs" />
     <Compile Include="ViewModel\LoginScreenViewModel.cs" />
     <Compile Include="ViewModel\NameAndSurnameViewModel.cs" />

@@ -1,6 +1,7 @@
 ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Commands;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.HelperMethods;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
+using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             users = new Users();
         }
         #region Properties
-        // 
         private vwUser user;
         public vwUser User
         {
@@ -95,9 +95,16 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 }
                 else
                 {
-                    NameAndSurnameView nameAndSurnameView = new NameAndSurnameView(UserName, password);
-                    loginScreen.Close();
-                    nameAndSurnameView.ShowDialog();
+                    if (PasswordValidation.PasswordOk(password))
+                    {
+                        NameAndSurnameView nameAndSurnameView = new NameAndSurnameView(UserName, password);
+                        loginScreen.Close();
+                        nameAndSurnameView.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Password must contain at least 5 characters!");
+                    }
                 }
             }
             catch (Exception ex)
