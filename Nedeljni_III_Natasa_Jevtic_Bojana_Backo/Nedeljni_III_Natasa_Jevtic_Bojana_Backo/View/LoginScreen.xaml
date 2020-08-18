@@ -1,0 +1,20 @@
+﻿<Window x:Class="Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View.LoginScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
+        mc:Ignorable="d"
+        Title="Login" Height="319" Width="300" FontSize="14" Background="RosyBrown" WindowStartupLocation="CenterScreen">
+    <Border Background="AntiqueWhite" CornerRadius="20" Margin="20">
+        <StackPanel Margin="20">
+            <Label Content="Login" Foreground="Gray" FontSize="25" HorizontalAlignment="Center"/>
+            <Separator></Separator>
+            <Label Content="Username" Foreground="Gray"/>
+            <TextBox Text="{Binding UserName, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" Name="txtUsername" Background="RosyBrown" Foreground="White" FontSize="18"/>
+            <Label Content="Password" Foreground="Gray"/>
+            <PasswordBox Name="txtPassword" Background="RosyBrown" Foreground="White" FontSize="18"/>
+            <Button Name="btnSubmit" Command="{Binding Submit}" CommandParameter="{Binding ElementName=txtPassword}" Content="Submit" Margin="60 10" Background="RosyBrown" Foreground="White"/>
+        </StackPanel>
+    </Border>
+</Window>
