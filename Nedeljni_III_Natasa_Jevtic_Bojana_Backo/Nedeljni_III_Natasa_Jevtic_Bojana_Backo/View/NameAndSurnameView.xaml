@@ -1,0 +1,20 @@
+﻿<Window x:Class="Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View.NameAndSurnameView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
+        mc:Ignorable="d"
+        Title="Add Employee" Height="250" Width="300" FontSize="14"
+        Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <GroupBox Header="" Margin="10" Padding="10" Background="AntiqueWhite">
+            <StackPanel>
+                <TextBlock>Name and Surname:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding User.NameAndSurname, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button  Margin="80, 20" Command="{Binding Save}" CommandParameter="{Binding ElementName=txtPassword}">Save</Button>
+                <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>
