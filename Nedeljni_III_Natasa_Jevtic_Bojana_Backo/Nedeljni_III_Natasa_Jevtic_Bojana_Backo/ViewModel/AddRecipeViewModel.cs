@@ -1,4 +1,5 @@
 ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Commands;
+using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,16 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
     class AddRecipeViewModel : ViewModelBase
     {
         AddRecipeView addRecipe;
+        Recipes recipes;
 
         public AddRecipeViewModel(AddRecipeView addRecipeOpen, vwUser userLogged)
         {
             addRecipe = addRecipeOpen;
             user = userLogged;
+            recipes = new Recipes();
+            recipe = new vwRecipe();
+            recipe.UserId = user.UserId;
+            recipe.Author = user.NameAndSurname;
         }
         #region Properties
         private vwUser user;
@@ -33,16 +39,53 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 OnPropertyChanged("User");
             }
         }
+        private vwRecipe recipe;
+        public vwRecipe Recipe
+        {
+            get
+            {
+                return recipe;
+            }
+            set
+            {
+                recipe = value;
+                OnPropertyChanged("Recipe");
+            }
+        }
         #endregion
 
         #region Commands
         // AddIngredients Button
-        //private ICommand addIngredients;
-        //public ICommand AddIngredients
-        //{
-        //    // Ostavljam tebi da implementiras
-            
-        //}
+        private ICommand addIngredients;
+        public ICommand AddIngredients
+        {
+            get
+            {
+                if (addIngredients == null)
+                {
+                    addIngredients = new RelayCommand(param => AddIngredientsExecute(), param => CanAddIngredientsExecute());
+                }
+                return addIngredients;
+            }
+        }
+        private void AddIngredientsExecute()
+        {
+            try
+            {
+                recipes.CreateRecipe(Recipe);
+                AddIngredientsView addIngredients = new AddIngredientsView(Recipe);
+                addRecipe.Close();
+                addIngredients.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanAddIngredientsExecute()
+        {
+            return true;
+        }
 
         // Cancel Button
         private ICommand cancel;
