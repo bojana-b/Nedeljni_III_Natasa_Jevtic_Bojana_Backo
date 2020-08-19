@@ -68,7 +68,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     if (isCreated)
                     {
                         MessageBox.Show("Account created!", "Notification");
-
                         NameAndSurnameView.Close();
                     }
                     else
@@ -104,14 +103,18 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             try
             {
-                LoginScreen login = new LoginScreen();
-                NameAndSurnameView.Close();
-                login.Show();
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    LoginScreen login = new LoginScreen();
+                    NameAndSurnameView.Close();
+                    login.Show();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-            }
+            }            
         }
         private bool CanCancelExecute()
         {

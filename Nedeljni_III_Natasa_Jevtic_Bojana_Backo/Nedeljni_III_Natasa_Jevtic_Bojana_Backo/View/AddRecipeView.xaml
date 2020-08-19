@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
         mc:Ignorable="d"
+        xmlns:Validation="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         Title="Add Recipe" Height="470" Width="300" FontSize="14" 
         Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
@@ -27,15 +28,44 @@
                           SelectedItem="{Binding Recipe.Type, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <TextBlock>Number Of Persons:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" 
-                         Text="{Binding Recipe.NumberOfPersons, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBlock>Description:</TextBlock>
+                <TextBox x:Name="btnNumberOfPersons"
+                 Validation.ErrorTemplate="{StaticResource errorTemplate}"                 
+                 Foreground="AntiqueWhite"
+                 Background="RosyBrown">
+                    <TextBox.Text>
+                        <Binding Path="Recipe.NumberOfPersons"
+                         UpdateSourceTrigger="PropertyChanged"
+                         ValidatesOnDataErrors="True"
+                         NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <Validation:NumberOfPersonsValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBlock Margin="0,18,0,0">Description:</TextBlock>
                 <TextBox Background="RosyBrown" Foreground="White"
                          Height="100" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled"
                          VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
                          Text="{Binding Recipe.Description, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Button  Margin="70, 20" Command="{Binding AddIngredients}" >Ingredients</Button>
+                <Button Margin="60,20"
+                Content="Add ingredients" 
+                Command="{Binding AddIngredients}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=btnNumberOfPersons}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
             </StackPanel>
         </GroupBox>
