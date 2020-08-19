@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HelperMethods\SecurePasswordHasher.cs" />
+    <Compile Include="Model\Ingredients.cs" />
+    <Compile Include="Model\Recipes.cs" />
     <Compile Include="Model\Users.cs" />
     <Compile Include="RecipesModel.Context.cs">
       <AutoGen>True</AutoGen>
