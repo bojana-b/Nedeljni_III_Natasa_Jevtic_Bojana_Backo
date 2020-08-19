@@ -25,7 +25,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             users = new Users();
         }
         #region Properties
-        // 
         private vwUser user;
         public vwUser User
         {

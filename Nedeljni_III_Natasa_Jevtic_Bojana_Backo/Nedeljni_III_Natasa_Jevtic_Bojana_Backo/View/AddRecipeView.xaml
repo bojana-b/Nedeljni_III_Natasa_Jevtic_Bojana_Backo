@@ -1,0 +1,43 @@
+﻿<Window x:Class="Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View.AddRecipeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
+        mc:Ignorable="d"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        Title="Add Recipe" Height="470" Width="300" FontSize="14" 
+        Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <x:Array Type="sys:String" x:Key="Type">
+            <sys:String>Appetizer</sys:String>
+            <sys:String>Main Course</sys:String>
+            <sys:String>Dessert</sys:String>
+        </x:Array>
+    </Window.Resources>
+    <Grid>
+        <GroupBox Header="Recipe Description" Margin="10" Padding="10" Background="AntiqueWhite">
+            <StackPanel>
+                <TextBlock>Recipe Name:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" 
+                         Text="{Binding Recipe.RecipeName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Recipe Type:</TextBlock>
+                <ComboBox Background="RosyBrown"
+                          ItemsSource="{StaticResource ResourceKey=Type}"
+                          SelectedItem="{Binding Recipe.Type, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <TextBlock>Number Of Persons:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" 
+                         Text="{Binding Recipe.NumberOfPersons, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Description:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White"
+                         Height="100" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled"
+                         VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
+                         Text="{Binding Recipe.Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button  Margin="70, 20" Command="{Binding AddIngredients}" >Ingredients</Button>
+                <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>
