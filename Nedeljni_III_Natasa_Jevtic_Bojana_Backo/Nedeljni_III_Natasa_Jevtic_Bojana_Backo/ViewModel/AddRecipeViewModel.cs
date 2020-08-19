@@ -116,9 +116,19 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    AdminView admin = new AdminView();
-                    addRecipe.Close();
-                    admin.Show();
+                    if (User.NameAndSurname == "Administrator")
+                    {
+                        AdminView adminView = new AdminView();
+                        addRecipe.Close();
+                        adminView.ShowDialog();
+
+                    }
+                    else
+                    {
+                        UserView userView = new UserView(User);
+                        addRecipe.Close();
+                        userView.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
