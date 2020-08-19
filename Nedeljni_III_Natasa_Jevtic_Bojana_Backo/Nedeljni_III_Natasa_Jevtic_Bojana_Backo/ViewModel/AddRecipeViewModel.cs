@@ -70,17 +70,26 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         }
         private void AddIngredientsExecute()
         {
-            try
+            if (String.IsNullOrEmpty(Recipe.RecipeName) || String.IsNullOrEmpty(Recipe.Type) || String.IsNullOrEmpty(Recipe.NumberOfPersons.ToString()) ||
+                Recipe.NumberOfPersons == 0 || String.IsNullOrEmpty(Recipe.Description))
             {
-                recipes.CreateRecipe(Recipe);
-                AddIngredientsView addIngredients = new AddIngredientsView(Recipe);
-                addRecipe.Close();
-                addIngredients.ShowDialog();
+                MessageBox.Show("Please fill all fields.", "Notification");
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.ToString());
-            }
+                try
+                {
+                    recipes.CreateRecipe(Recipe, out int id);
+                    Recipe.RecipeId = id;
+                    AddIngredientsView addIngredients = new AddIngredientsView(Recipe);
+                    addRecipe.Close();
+                    addIngredients.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }            
         }
         private bool CanAddIngredientsExecute()
         {
@@ -104,14 +113,18 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             try
             {
-                AdminView admin = new AdminView();
-                addRecipe.Close();
-                admin.Show();
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    AdminView admin = new AdminView();
+                    addRecipe.Close();
+                    admin.Show();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-            }
+            }            
         }
         private bool CanCancelExecute()
         {
