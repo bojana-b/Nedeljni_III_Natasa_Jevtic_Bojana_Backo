@@ -68,7 +68,9 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     if (isCreated)
                     {
                         MessageBox.Show("Account created!", "Notification");
+                        AddRecipeView recipeView = new AddRecipeView(User);
                         NameAndSurnameView.Close();
+                        recipeView.ShowDialog();                        
                     }
                     else
                     {

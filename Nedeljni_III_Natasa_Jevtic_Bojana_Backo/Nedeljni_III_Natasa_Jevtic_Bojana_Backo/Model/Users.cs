@@ -94,5 +94,22 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                 return null;
             }
         }
+
+        public vwUser FindUser(int id)
+        {
+            try
+            {
+                using (RecipesDBEntities context = new RecipesDBEntities())
+                {
+                    vwUser user = (from e in context.vwUsers where e.UserId == id select e).First();
+                    return user;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
     }
 }
