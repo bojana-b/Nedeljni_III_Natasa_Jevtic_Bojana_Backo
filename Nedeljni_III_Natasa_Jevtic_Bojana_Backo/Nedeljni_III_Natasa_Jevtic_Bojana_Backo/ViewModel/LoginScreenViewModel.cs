@@ -23,6 +23,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             loginScreen = loginScreenOpen;
             users = new Users();
+            user = new vwUser();
         }
         #region Properties
         private vwUser user;
@@ -75,9 +76,22 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 string password = (obj as PasswordBox).Password;
                 if (UserName.Equals("Admin") && password.Equals("Admin123"))
                 {
-                    MainWindow master = new MainWindow();
-                    loginScreen.Close();
-                    master.ShowDialog();
+                    if (!users.IsUser("Admin"))
+                    {
+                        User.Username = UserName;
+                        User.Password = password;
+                        User.NameAndSurname = "Administrator";
+                        users.AddUser(User);
+                        AdminView admin = new AdminView();
+                        loginScreen.Close();
+                        admin.ShowDialog();
+                    }
+                    else
+                    {
+                        AdminView admin = new AdminView();
+                        loginScreen.Close();
+                        admin.ShowDialog();
+                    }
                 }
                 else if (users.IsUser(UserName))
                 {
