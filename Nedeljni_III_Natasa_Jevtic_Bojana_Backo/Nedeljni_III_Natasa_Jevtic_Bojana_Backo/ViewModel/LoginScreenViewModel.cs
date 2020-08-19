@@ -98,9 +98,9 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     User = users.FindUser(UserName);
                     if (SecurePasswordHasher.Verify(password, User.Password))
                     {
-                        MainWindow managerWindow = new MainWindow();
+                        UserView userWindow = new UserView(User);
                         loginScreen.Close();
-                        managerWindow.ShowDialog();
+                        userWindow.ShowDialog();
                     }
                     else
                     {
