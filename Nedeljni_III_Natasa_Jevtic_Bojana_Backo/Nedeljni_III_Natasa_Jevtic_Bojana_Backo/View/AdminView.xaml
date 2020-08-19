@@ -65,7 +65,7 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
-            <Button Margin="90, 10" Command="{Binding Cancel}">Cancel</Button>
+            <Button Margin="120, 10" Command="{Binding Cancel}">Log out</Button>
         </Grid>
     </Grid>
 </Window>
