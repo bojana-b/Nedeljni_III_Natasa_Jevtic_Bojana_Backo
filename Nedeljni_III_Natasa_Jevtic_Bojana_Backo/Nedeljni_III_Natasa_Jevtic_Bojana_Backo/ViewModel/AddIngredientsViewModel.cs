@@ -16,6 +16,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         AddIngredientsView addIngredients;
         Ingredients ingredients = new Ingredients();
         Recipes recipes = new Recipes();
+        Users users = new Users();
 
         public AddIngredientsViewModel(AddIngredientsView addIngredientsOpen, vwRecipe recipeCreated)
         {
@@ -225,9 +226,21 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                         bool isConfirmed = recipes.ConfirmRecipe(Recipe);
                         if (isConfirmed == true)
                         {
-                            MessageBox.Show("Recipe is created.", "Notification", MessageBoxButton.OK);
-                            addIngredients.Close();
+                            MessageBox.Show("Recipe is created.", "Notification", MessageBoxButton.OK);                            
+                            if (Recipe.NameAndSurname == "Administrator")
+                            {
+                                AdminView adminView = new AdminView();
+                                addIngredients.Close();
+                                adminView.ShowDialog();
+                                
+                            }
+                            else
+                            {
 
+                                UserView userView = new UserView(users.FindUser(recipe.UserId));
+                                addIngredients.Close();
+                                userView.ShowDialog();
+                            }
                         }
                         else
                         {
