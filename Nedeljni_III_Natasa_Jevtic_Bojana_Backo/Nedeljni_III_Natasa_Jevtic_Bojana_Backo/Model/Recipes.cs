@@ -12,7 +12,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
         /// </summary>
         /// <param name="recipeToAdd">Recipe to be added.</param>  
         /// <returns>True if created, false if not.</returns>
-        public bool CreateRecipe(vwRecipe recipeToAdd)
+        public bool CreateRecipe(vwRecipe recipeToAdd, out int recipeId)
         {
             try
             {
@@ -28,14 +28,16 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                         Type = recipeToAdd.Type,
                         UserId = recipeToAdd.UserId
                     };
-                    context.tblRecipes.Add(recipe);
+                    context.tblRecipes.Add(recipe);                    
                     context.SaveChanges();
+                    recipeId = recipe.RecipeId;
                     return true;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Exception" + ex.Message.ToString());
+                recipeId = 0;
                 return false;
             }
         }
@@ -129,6 +131,29 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                         context.SaveChanges();
                     }
                     context.tblRecipes.Remove(recipe);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return false;
+            }
+        }
+        /// <summary>
+        ///  This method changes time of recept creation and saves changes to database.
+        /// </summary>
+        /// <param name="recipe">Recipe.</param>
+        /// <returns>True if recipe is edited, false if not.</returns>
+        public bool ConfirmRecipe(vwRecipe recipeToConfirm)
+        {
+            try
+            {
+                using (RecipesDBEntities context = new RecipesDBEntities())
+                {
+                    tblRecipe recipe = context.tblRecipes.Where(x => x.RecipeId == recipeToConfirm.RecipeId).FirstOrDefault();                    
+                    recipe.DateOfCreation = DateTime.Now;                    
                     context.SaveChanges();
                     return true;
                 }

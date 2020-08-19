@@ -79,7 +79,8 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 try
                 {
-                    recipes.CreateRecipe(Recipe);
+                    recipes.CreateRecipe(Recipe, out int id);
+                    Recipe.RecipeId = id;
                     AddIngredientsView addIngredients = new AddIngredientsView(Recipe);
                     addRecipe.Close();
                     addIngredients.ShowDialog();
