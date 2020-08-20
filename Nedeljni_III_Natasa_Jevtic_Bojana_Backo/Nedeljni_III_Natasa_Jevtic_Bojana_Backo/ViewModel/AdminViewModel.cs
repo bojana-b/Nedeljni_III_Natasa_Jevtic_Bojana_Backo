@@ -52,6 +52,20 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 OnPropertyChanged("RecipeList");
             }
         }
+
+        private vwRecipe recipe;
+        public vwRecipe Recipe
+        {
+            get
+            {
+                return recipe;
+            }
+            set
+            {
+                recipe = value;
+                OnPropertyChanged("Recipe");
+            }
+        }
         #endregion
 
         #region Commands
@@ -118,6 +132,96 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         private bool CanAddNewRecipeExecute()
         {
             return true;
+        }
+
+        private ICommand edit;
+        public ICommand Edit
+        {
+            get
+            {
+                if (edit == null)
+                {
+                    edit = new RelayCommand(param => EditExecute(), param => CanEditExecute());
+                }
+                return edit;
+            }
+        }
+
+        private void EditExecute()
+        {
+            try
+            {
+                EditRecipeView editRecipeView = new EditRecipeView(User,Recipe);
+                adminView.Close();
+                editRecipeView.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanEditExecute()
+        {
+            if (Recipe != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private ICommand delete;
+        public ICommand Delete
+        {
+            get
+            {
+                if (delete == null)
+                {
+                    delete = new RelayCommand(param => DeleteExecute(), param => CanDeleteExecute());
+                }
+                return delete;
+            }
+        }
+        public void DeleteExecute()
+        {
+            try
+            {
+                if (Recipe != null)
+                {
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this recipe?", "Confirmation", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        bool isDeleted = recipes.DeleteRecipe(Recipe);
+
+                        if (isDeleted == true)
+                        {
+                            MessageBox.Show("Recipe is deleted.", "Notification", MessageBoxButton.OK);
+                            RecipeList = recipes.ViewAllRecipes();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Recipe cannot be deleted.", "Notification", MessageBoxButton.OK);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        public bool CanDeleteExecute()
+        {
+            if (Recipe != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
     }
