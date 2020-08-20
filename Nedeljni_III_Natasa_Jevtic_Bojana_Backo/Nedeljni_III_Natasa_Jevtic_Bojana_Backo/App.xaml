@@ -7,7 +7,7 @@
         <ControlTemplate x:Key="errorTemplate">
             <StackPanel>
                 <AdornedElementPlaceholder/>
-                <TextBlock Foreground="OrangeRed"
+                <TextBlock Foreground="RosyBrown"
                            Text="{Binding [0].ErrorContent}" />
             </StackPanel>
         </ControlTemplate>

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
         mc:Ignorable="d"
         xmlns:Validation="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations"
-        Title="Add ingredients" MinHeight="450" MinWidth="330" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Add ingredients" MinHeight="450" MinWidth="330" Background="AntiqueWhite"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Grid.ColumnDefinitions>
