@@ -73,9 +73,32 @@
                 <ListView Name="lvUsers" ItemsSource="{Binding RecipeList}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding RecipeName}" />
-                            <GridViewColumn Header="Recipe Type" Width="auto" DisplayMemberBinding="{Binding Type}" />
-                            <GridViewColumn Header="Number Of Persons" Width="auto" DisplayMemberBinding="{Binding NumberOfPersons}" />
+                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding RecipeName}" >
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="RecipeName" Click="lvUsersColumnHeader_Click">Recipe Name</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Type}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Type" Click="lvUsersColumnHeader_Click">Recipe Type</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding NumberOfPersons}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="NumberOfPersons" Click="lvUsersColumnHeader_Click">Number Of Persons</GridViewColumnHeader>
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Action" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="editBtn" Content="Edit" 
+                                            Command="{Binding DataContext.Edit, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
+                                        UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
