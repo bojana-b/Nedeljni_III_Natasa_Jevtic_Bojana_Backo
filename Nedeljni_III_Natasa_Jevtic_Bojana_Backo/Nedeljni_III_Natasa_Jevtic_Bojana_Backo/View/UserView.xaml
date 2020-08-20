@@ -69,12 +69,13 @@
         </Grid>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
             <DockPanel Margin="10">
-                <TextBox DockPanel.Dock="Top" Margin="0,0,0,10" Name="txtFilter" TextChanged="txtFilter_TextChanged" />
+                <TextBox DockPanel.Dock="Top" Margin="0,0,150,10" Name="txtFilter" TextChanged="txtFilter_TextChanged" />
                 <ListView Name="lvUsers" ItemsSource="{Binding RecipeList}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding RecipeName}" />
-                            <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding Type}" />
+                            <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding RecipeName}" />
+                            <GridViewColumn Header="Recipe Type" Width="auto" DisplayMemberBinding="{Binding Type}" />
+                            <GridViewColumn Header="Number Of Persons" Width="auto" DisplayMemberBinding="{Binding NumberOfPersons}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

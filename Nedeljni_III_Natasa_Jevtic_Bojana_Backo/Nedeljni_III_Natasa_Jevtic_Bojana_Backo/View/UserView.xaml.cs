@@ -19,7 +19,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             //
             Recipes recipes = new Recipes();
             List<vwRecipe> items = new List<vwRecipe>();
-            items = recipes.ViewAllRecipes();
+            items = recipes.ViewUserRecipes(userLogged);
             lvUsers.ItemsSource = items;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUsers.ItemsSource);
@@ -28,7 +28,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         }
         private bool UserFilter(object item)
         {
-            if (String.IsNullOrEmpty(txtFilter.Text))
+            if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
                 return true;
             else
                 return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
