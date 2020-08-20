@@ -34,11 +34,19 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         }
         private bool UserFilter(object item)
         {
-            if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
+            if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text))
+            {
+                return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
+            {
                 return true;
+            }
             else
+            {
                 return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0
                     && (item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
         }
        
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
