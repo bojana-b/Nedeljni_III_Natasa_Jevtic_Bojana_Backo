@@ -148,7 +148,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             try
             {
-                SearchIngredients searchIngredients = new SearchIngredients(UserView.filteredList);
+                SearchIngredients searchIngredients = new SearchIngredients();
                 userView.Close();
                 searchIngredients.ShowDialog();
             }
