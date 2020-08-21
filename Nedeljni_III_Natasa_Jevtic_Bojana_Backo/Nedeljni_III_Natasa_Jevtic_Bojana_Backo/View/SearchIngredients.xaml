@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
+        xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"        
         mc:Ignorable="d"
         Title="Search Ingredients" Background="AntiqueWhite" SizeToContent="WidthAndHeight" 
-        FontSize="14" WindowStartupLocation="CenterScreen">
+        FontSize="14" WindowStartupLocation="CenterScreen" MinWidth="250">    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="6"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>           
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,7 +18,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="6"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="6"/>
+            <RowDefinition Height="6"/>            
             <RowDefinition Height="auto"/>
             <RowDefinition Height="6"/>
             <RowDefinition Height="auto"/>
@@ -28,45 +26,35 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="1" Grid.Row="1" Height="auto" Width="auto">
-            <TextBlock Foreground="RosyBrown" FontSize="18" Text="WELCOME ADMIN"></TextBlock>
+        <Label Grid.Column="1" Grid.Row="1" Content="Name"/>
+        <TextBox Text="{Binding Ingredient}"
+                 Grid.Column="1" Grid.Row="3"
+        Width="120" HorizontalAlignment="Left"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="+" HorizontalAlignment="Right"
+                Command="{Binding AddIngredient}" Width="20"/>
+        <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
+            <Button Command="{Binding Search}" Background="RosyBrown" Foreground="White" Width="80" HorizontalAlignment="Left">Search</Button>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="3" Height="auto" Width="auto">
-            <Button Margin="90, 10"  Command="{Binding AddNewRecipe}">Add new recipe</Button>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="auto">
-            <DataGrid x:Name="DataGridResults" ItemsSource="{Binding RecipeList, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
+        <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="210">
+            <DataGrid x:Name="DataGridIngredients" ItemsSource="{Binding IngredientList, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Ingredient, UpdateSourceTrigger=PropertyChanged}"
+                      IsReadOnly="True" HeadersVisibility="Column"
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Recipe Name" Binding="{Binding RecipeName}"/>
-                    <DataGridTextColumn Header="Recipe Type" Binding="{Binding Type}"/>
-                    <DataGridTextColumn Header="Number Of Persons" Binding="{Binding NumberOfPersons}"/>
+                    <DataGridTextColumn Width="*" Header="Ingredient" Binding="{Binding Ingredient}"/>
                     <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Action" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="editBtn" Content="Edit" 
-                                            Command="{Binding DataContext.Edit, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                                    <Button x:Name="deleteBtn" Content="Delete" 
-                                            Command="{Binding DataContext.Delete, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
+                                <Button Content="-" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.RemoveIngredient}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Grid.Column="3" Grid.Row="1" Height="auto" Width="auto">
-            <Button Background="RosyBrown" Foreground="White" Width="80"
-                    Command="{Binding Cancel}">Log out</Button>
+        <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
+            <Button Background="RosyBrown" Foreground="White" Width="80" HorizontalAlignment="Right"
+                    Command="{Binding Cancel}">Cancel</Button>
         </Grid>
     </Grid>
 </Window>
