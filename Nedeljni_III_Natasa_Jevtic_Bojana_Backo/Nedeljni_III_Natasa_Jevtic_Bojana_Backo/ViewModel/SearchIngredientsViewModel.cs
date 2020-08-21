@@ -11,10 +11,11 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
     {
         SearchIngredients searchIngredients;
 
-        public SearchIngredientsViewModel(SearchIngredients searchIngredientsOpen)
+        public SearchIngredientsViewModel(SearchIngredients searchIngredientsOpen, List<vwRecipe> list)
         {
             searchIngredients = searchIngredientsOpen;
-            recipeList = UserView.filteredList;
+            //recipeList = UserView.filteredList;
+            RecipeList = list;
         }
 
         #region Properties

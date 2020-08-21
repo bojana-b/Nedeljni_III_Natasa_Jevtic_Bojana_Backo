@@ -3,9 +3,6 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -23,7 +20,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             users = new Users();
             recipes = new Recipes();
             user = userLogged;
-            recipeList = recipes.ViewUserRecipes(user);
+            recipeList = UserView.filteredList;
         }
 
         #region Properties
@@ -50,7 +47,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             set
             {
                 recipeList = value;
-                OnPropertyChanged("RecipeList");
+                OnPropertyChanged("filteredList");
             }
         }
 
@@ -151,7 +148,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             try
             {
-                SearchIngredients searchIngredients = new SearchIngredients();
+                SearchIngredients searchIngredients = new SearchIngredients(UserView.filteredList);
                 userView.Close();
                 searchIngredients.ShowDialog();
             }
