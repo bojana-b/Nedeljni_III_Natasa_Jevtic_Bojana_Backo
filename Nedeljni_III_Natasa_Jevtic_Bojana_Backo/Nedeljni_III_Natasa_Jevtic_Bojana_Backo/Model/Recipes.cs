@@ -153,7 +153,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                 using (RecipesDBEntities context = new RecipesDBEntities())
                 {
                     tblRecipe recipe = context.tblRecipes.Where(x => x.RecipeId == recipeToConfirm.RecipeId).FirstOrDefault();                    
-                    recipe.DateOfCreation = DateTime.Now;                    
+                    recipe.DateOfCreation = DateTime.Now;
                     context.SaveChanges();
                     return true;
                 }

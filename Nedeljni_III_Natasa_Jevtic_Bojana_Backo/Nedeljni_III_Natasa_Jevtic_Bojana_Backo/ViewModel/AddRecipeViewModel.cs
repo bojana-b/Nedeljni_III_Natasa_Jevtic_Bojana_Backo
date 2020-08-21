@@ -15,6 +15,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
     {
         AddRecipeView addRecipe;
         Recipes recipes;
+        Users users = new Users();
 
         public AddRecipeViewModel(AddRecipeView addRecipeOpen, vwUser userLogged)
         {
@@ -23,7 +24,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             recipes = new Recipes();
             recipe = new vwRecipe();
             recipe.UserId = user.UserId;
-            recipe.Author = user.NameAndSurname;
+            recipe.Author = user.NameAndSurname;            
         }
         #region Properties
         private vwUser user;
@@ -116,7 +117,8 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (User.NameAndSurname == "Administrator")
+                    if (Recipe.NameAndSurname == "Administrator")
+
                     {
                         AdminView adminView = new AdminView();
                         addRecipe.Close();
@@ -125,10 +127,11 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     }
                     else
                     {
-                        UserView userView = new UserView(User);
+                        UserView userView = new UserView(users.FindUser(recipe.UserId));
                         addRecipe.Close();
                         userView.ShowDialog();
-                    }
+                    }                    
+
                 }
             }
             catch (Exception ex)
