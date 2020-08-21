@@ -36,7 +36,7 @@
             </TextBlock>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="9" Height="auto" Width="auto">
-            <Button Margin="90, 10"  Command="{Binding AddNewRecipe}">Add new recipe</Button>
+            <Button Width="110" Command="{Binding AddNewRecipe}">Add new recipe</Button>
         </Grid>
         <!--
         <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="auto">
@@ -74,10 +74,12 @@
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
             <TextBlock Margin="10,0">Search by name:</TextBlock>
             <TextBlock Margin="40,0">Search by type:</TextBlock>
+            <TextBlock Margin="10,0">Search by ingredients:</TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
             <TextBox Margin="5,0" Name="txtFilter" TextChanged="txtFilter_TextChanged" Width="120" />
             <TextBox Margin="25,0" Name="txtFilter1" TextChanged="txtFilter_TextChanged" Width="120" />
+            <Button x:Name="btnSearch" Width="90" Command="{Binding SearchByIngedients}">Search</Button>
         </StackPanel>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
             <DockPanel>

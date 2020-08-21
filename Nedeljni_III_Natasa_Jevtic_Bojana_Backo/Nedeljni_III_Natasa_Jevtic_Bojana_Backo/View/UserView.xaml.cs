@@ -3,6 +3,7 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,6 +19,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
     {
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
+        public static List<vwRecipe> filteredList = new List<vwRecipe>();
         public UserView(vwUser userLogged)
         {
             InitializeComponent();
@@ -30,7 +32,8 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUsers.ItemsSource);
             view.Filter = UserFilter;
-
+            var filteredList = view.Cast<vwRecipe>().ToList();
+            //filteredList = view.Cast<vwRecipe>().ToList();
         }
         private bool UserFilter(object item)
         {
@@ -47,6 +50,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
                 return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0
                     && (item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
+            
         }
        
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
