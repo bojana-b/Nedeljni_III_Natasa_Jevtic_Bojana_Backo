@@ -118,6 +118,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 if (result == MessageBoxResult.Yes)
                 {
                     if (Recipe.NameAndSurname == "Administrator")
+
                     {
                         AdminView adminView = new AdminView();
                         addRecipe.Close();
@@ -126,11 +127,11 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     }
                     else
                     {
-
                         UserView userView = new UserView(users.FindUser(recipe.UserId));
                         addRecipe.Close();
                         userView.ShowDialog();
                     }                    
+
                 }
             }
             catch (Exception ex)
