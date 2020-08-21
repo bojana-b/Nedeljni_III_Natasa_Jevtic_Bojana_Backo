@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
          xmlns:Validation="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-        Title="Edit recipe" Height="470" Width="300" FontSize="14" 
+        Title="Edit recipe" Height="470" SizeToContent="WidthAndHeight"
         Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <x:Array Type="sys:String" x:Key="Type">

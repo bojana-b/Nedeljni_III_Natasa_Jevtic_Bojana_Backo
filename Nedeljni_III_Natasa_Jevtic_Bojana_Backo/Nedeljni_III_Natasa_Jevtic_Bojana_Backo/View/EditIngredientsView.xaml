@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
         xmlns:Validation="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Validations"
-        Title="Edit ingredients" MinHeight="450" MinWidth="330" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Edit ingredients" MinHeight="450" MinWidth="330" SizeToContent="WidthAndHeight" 
+        WindowStartupLocation="CenterScreen" Background="AntiqueWhite">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,10 +32,12 @@
             <Label Content="Quantity:" Margin="80,0,0,0"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBox Text="{Binding Ingredient.IngredientName, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,0,5,0"/>
+            <TextBox Text="{Binding Ingredient.IngredientName, UpdateSourceTrigger=PropertyChanged}"
+                     Width="120" Margin="0,0,5,0"
+                     Background="RosyBrown" Foreground="White"/>
             <TextBox x:Name="txtQuantity"
                  Validation.ErrorTemplate="{StaticResource errorTemplate}"
-                     Width="120"
+                     Width="120" Background="RosyBrown" Foreground="White"
                      Margin="0,0,5,0">
                 <TextBox.Text>
                     <Binding Path="Ingredient.Quantity"
@@ -72,7 +75,8 @@
                 SelectedItem="{Binding Ingredient, UpdateSourceTrigger=PropertyChanged}"
                 IsReadOnly="True" 
                 HeadersVisibility="Column"  
-                AutoGenerateColumns="False">
+                AutoGenerateColumns="False"
+                      Margin="0,0,150,0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding IngredientName}"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>

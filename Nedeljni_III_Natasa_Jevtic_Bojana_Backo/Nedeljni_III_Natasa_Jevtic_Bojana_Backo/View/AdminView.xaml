@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View"
         mc:Ignorable="d"
-        Title="Admin Window" Background="AntiqueWhite" Height="450" Width="500" 
+        Title="Admin Window" Background="AntiqueWhite" SizeToContent="WidthAndHeight" 
         FontSize="14" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
