@@ -12,7 +12,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
         /// </summary>
         /// <param name="ingredient">Ingredient to be added.</param>  
         /// <returns>True if created, false if not.</returns>
-        public bool AddIngredient(vwIngredient ingredientToAdd)
+        public bool AddIngredient(vwIngredient ingredientToAdd, out int ingredientId)
         {
             try
             {
@@ -26,12 +26,14 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                     };
                     context.tblIngredients.Add(ingredient);
                     context.SaveChanges();
+                    ingredientId = ingredient.IngredientId;
                     return true;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Exception" + ex.Message.ToString());
+                ingredientId = 0;
                 return false;
             }
         }

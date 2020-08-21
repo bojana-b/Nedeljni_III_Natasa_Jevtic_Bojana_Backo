@@ -3,27 +3,25 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
 {
-    class AddIngredientsViewModel : ViewModelBase
+    class EditIngredientsViewModel : ViewModelBase
     {
-        AddIngredientsView addIngredients;
+        EditIngredientsView editIngredients;
         Ingredients ingredients = new Ingredients();
         Recipes recipes = new Recipes();
         Users users = new Users();
 
-        public AddIngredientsViewModel(AddIngredientsView addIngredientsOpen, vwRecipe recipeCreated)
+        public EditIngredientsViewModel(EditIngredientsView editIngredientsOpen, vwRecipe recipeCreated)
         {
-            addIngredients = addIngredientsOpen;
-            recipe = recipeCreated;
+            editIngredients = editIngredientsOpen;
+            Recipe = recipeCreated;
             Ingredient = new vwIngredient();
             ingredient.RecipeId = recipeCreated.RecipeId;
+            IngredientList = ingredients.GetRecipeIngredients(Recipe);
         }
         private vwRecipe recipe;
         public vwRecipe Recipe
@@ -67,6 +65,9 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             }
         }
 
+        public List<vwIngredient> AddedIngredientList { get; set; } = new List<vwIngredient>();
+        public List<vwIngredient> DeletedIngredientList { get; set; } = new List<vwIngredient>();
+
         private ICommand removeIngredient;
 
         public ICommand RemoveIngredient
@@ -109,17 +110,17 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             }
         }
 
-        private ICommand saveRecipe;
+        private ICommand saveIngredients;
 
-        public ICommand SaveRecipe
+        public ICommand SaveIngredients
         {
             get
             {
-                if (saveRecipe == null)
+                if (saveIngredients == null)
                 {
-                    saveRecipe = new RelayCommand(param => SaveRecipeExecute(), param => CanSaveRecipeExecute());
+                    saveIngredients = new RelayCommand(param => SaveIngredientsExecute(), param => CanSaveIngredientsExecute());
                 }
-                return saveRecipe;
+                return saveIngredients;
             }
         }
 
@@ -131,6 +132,10 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 {
                     //invokes method to delete ingredient
                     ingredients.DeleteIngredient(Ingredient);
+                    //removing from collection of added ingredients
+                    AddedIngredientList.Remove(Ingredient);
+                    //added to collection of deleted ingredients
+                    DeletedIngredientList.Add(Ingredient);
                     //invokes method to update list of ingredients
                     IngredientList = ingredients.GetRecipeIngredients(Recipe);
                     Ingredient = new vwIngredient();
@@ -162,6 +167,10 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 {
                     ingredients.AddIngredient(Ingredient, out int id);
                     Ingredient.IngredientId = id;
+                    //add to collection of added ingredients
+                    AddedIngredientList.Add(Ingredient);
+                    //remove from collection of deleted ingredients
+                    DeletedIngredientList.Remove(Ingredient);
                     //invokes method to update a list of ingredients
                     IngredientList = ingredients.GetRecipeIngredients(Recipe);
                     Ingredient = new vwIngredient();
@@ -171,7 +180,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 {
                     MessageBox.Show(ex.ToString());
                 }
-            }            
+            }
         }
 
         public bool CanAddIngredientExecute()
@@ -179,25 +188,31 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             return true;
         }
         /// <summary>
-        /// This method invokes method for deleting order.
+        /// This method invokes method for closing window for editing ingredients.
         /// </summary>
         public void CancelRecipeExecute()
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel creating the recipe?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel editing ingredients?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    bool isCanceled = recipes.DeleteRecipe(Recipe);
-                    if (isCanceled == true)
+                    if (AddedIngredientList != null || AddedIngredientList.Count > 0)
                     {
-                        MessageBox.Show("Creating recipe is canceled.", "Notification", MessageBoxButton.OK);
-                        addIngredients.Close();
+                        foreach (var ingredient in AddedIngredientList)
+                        {
+                            ingredients.DeleteIngredient(ingredient);
+                        }
                     }
-                    else
+                    if (DeletedIngredientList != null || DeletedIngredientList.Count > 0)
                     {
-                        MessageBox.Show("Creating recipe cannot be canceled.", "Notification", MessageBoxButton.OK);
+                        foreach (var ingredient in DeletedIngredientList)
+                        {
+                            ingredients.AddIngredient(ingredient, out int id);
+                            ingredient.IngredientId = id;
+                        }
                     }
+                    editIngredients.Close();
                 }
             }
             catch (Exception ex)
@@ -211,7 +226,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             return true;
         }
 
-        public void SaveRecipeExecute()
+        public void SaveIngredientsExecute()
         {
             if (IngredientList == null || IngredientList.Count == 0)
             {
@@ -221,47 +236,24 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 try
                 {
-                    MessageBoxResult result = MessageBox.Show("Are you sure you want to save the recipe?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult result = MessageBox.Show("Are you sure you want to save the ingredients?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result == MessageBoxResult.Yes)
                     {
-                        bool isConfirmed = recipes.ConfirmRecipe(Recipe);
-                        if (isConfirmed == true)
+                        foreach (var ingredient in IngredientList)
                         {
-                            //if user select item from list and then changes
-                            foreach (var ingredient in IngredientList)
-                            {
-                                ingredients.EditIngredient(ingredient);
-                            }
-                            MessageBox.Show("Recipe is created.", "Notification", MessageBoxButton.OK);                            
-                            if (Recipe.Author == "Administrator")
-                            {                                
-                                AdminView adminView = new AdminView();
-                                addIngredients.Close();
-                                adminView.ShowDialog();
-                                
-                            }
-                            else
-                            {
-
-                                UserView userView = new UserView(users.FindUser(recipe.UserId));
-                                addIngredients.Close();
-                                userView.ShowDialog();
-                            }
+                            ingredients.EditIngredient(ingredient);
                         }
-                        else
-                        {
-                            MessageBox.Show("Recipe cannot be created.", "Notification", MessageBoxButton.OK);
-                        }
+                        editIngredients.Close();
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
-            }            
+            }
         }
 
-        public bool CanSaveRecipeExecute()
+        public bool CanSaveIngredientsExecute()
         {
             return true;
         }

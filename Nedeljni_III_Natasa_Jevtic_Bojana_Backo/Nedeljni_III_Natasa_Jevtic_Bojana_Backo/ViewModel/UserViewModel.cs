@@ -53,6 +53,20 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 OnPropertyChanged("RecipeList");
             }
         }
+
+        private vwRecipe recipe;
+        public vwRecipe Recipe
+        {
+            get
+            {
+                return recipe;
+            }
+            set
+            {
+                recipe = value;
+                OnPropertyChanged("Recipe");
+            }
+        }
         #endregion
 
         #region Commands
@@ -119,6 +133,44 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         private bool CanAddNewRecipeExecute()
         {
             return true;
+        }
+
+        private ICommand edit;
+        public ICommand Edit
+        {
+            get
+            {
+                if (edit == null)
+                {
+                    edit = new RelayCommand(param => EditExecute(), param => CanEditExecute());
+                }
+                return edit;
+            }
+        }
+
+        private void EditExecute()
+        {
+            try
+            {
+                EditRecipeView editRecipeView = new EditRecipeView(User, Recipe);
+                userView.Close();
+                editRecipeView.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanEditExecute()
+        {
+            if (Recipe != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
     }
