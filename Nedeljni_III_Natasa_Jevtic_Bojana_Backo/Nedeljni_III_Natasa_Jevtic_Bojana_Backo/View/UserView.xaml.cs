@@ -20,25 +20,25 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
         public static List<vwRecipe> filteredList = new List<vwRecipe>();
+        public List<vwRecipe> items;
+        public CollectionView view;
         public UserView(vwUser userLogged)
         {
             InitializeComponent();
             this.DataContext = new UserViewModel(this, userLogged);
-            //
+            
             Recipes recipes = new Recipes();
-            List<vwRecipe> items = new List<vwRecipe>();
+            items = new List<vwRecipe>();
             items = recipes.ViewUserRecipes(userLogged);
             lvUsers.ItemsSource = items;
-
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvUsers.ItemsSource);
-            view.Filter = UserFilter;
-            var filteredList = view.Cast<vwRecipe>().ToList();
-            //filteredList = view.Cast<vwRecipe>().ToList();
+            view = (CollectionView)CollectionViewSource.GetDefaultView(lvUsers.ItemsSource);
+            view.Filter = UserFilter;            
+            filteredList = new List<vwRecipe>();            
         }
         private bool UserFilter(object item)
         {
             if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text))
-            {
+            {                              
                 return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
             else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
@@ -49,13 +49,13 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             {
                 return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0
                     && (item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
-            
+            }            
         }
        
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(lvUsers.ItemsSource).Refresh();
+            filteredList = items.Where(i => view.Filter(i)).ToList();
         }
 
         private void lvUsersColumnHeader_Click(object sender, RoutedEventArgs e)
