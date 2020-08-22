@@ -40,7 +40,8 @@
             <TextBox Margin="5,0" Name="txtFilter" TextChanged="TextBox_TextChanged" Width="120" />
             <TextBox Margin="25,0" Name="txtFilter1" TextChanged="TextBox_TextChanged" Width="120" />
         </StackPanel>
-        <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Command="{Binding SearchByIngedients}">Search</Button>
+        <Button Grid.Column="3" Grid.Row="5" Width="20" Command="{Binding SearchByIngedients}" Margin="0,0,90,0">+</Button>
+        <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Click="searchButtonClick" Margin="50,0,0,0">Search</Button>
         <Grid Grid.Column="1" Grid.Row="9" Height="auto" Width="auto">
             <Button Margin="90, 10"  Command="{Binding AddNewRecipe}">Add new recipe</Button>
         </Grid>

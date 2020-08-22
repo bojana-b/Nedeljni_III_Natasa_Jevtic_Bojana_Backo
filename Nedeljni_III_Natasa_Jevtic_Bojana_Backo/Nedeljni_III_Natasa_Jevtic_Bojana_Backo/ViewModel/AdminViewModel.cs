@@ -3,9 +3,6 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -222,6 +219,36 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 return false;
             }
+        }
+
+        private ICommand searchByIngedients;
+        public ICommand SearchByIngedients
+        {
+            get
+            {
+                if (searchByIngedients == null)
+                {
+                    searchByIngedients = new RelayCommand(param => SearchByIngedientsExecute(), param => CanSearchByIngedientsExecute());
+                }
+                return searchByIngedients;
+            }
+        }
+        private void SearchByIngedientsExecute()
+        {
+            try
+            {
+                SearchIngredients searchIngredients = new SearchIngredients();
+                searchIngredients.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private bool CanSearchByIngedientsExecute()
+        {
+            return true;
         }
         #endregion
     }

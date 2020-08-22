@@ -1,0 +1,9 @@
+diff a/Nedeljni_III_Natasa_Jevtic_Bojana_Backo/Nedeljni_III_Natasa_Jevtic_Bojana_Backo/View/SearchIngredients.xaml.cs b/Nedeljni_III_Natasa_Jevtic_Bojana_Backo/Nedeljni_III_Natasa_Jevtic_Bojana_Backo/View/SearchIngredients.xaml.cs	(rejected hunks)
+@@ -1,6 +1,7 @@
+ ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel;
+ using System.Collections.Generic;
+ using System.Windows;
++using System.Windows.Controls;
+ 
+ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
+ {
