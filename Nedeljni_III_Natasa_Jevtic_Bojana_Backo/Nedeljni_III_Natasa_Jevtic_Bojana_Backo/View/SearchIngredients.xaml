@@ -34,7 +34,7 @@
                 Command="{Binding AddIngredient}" Width="20"/>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
             <Button Command="{Binding Search}" Background="RosyBrown" Foreground="White" Width="80" 
-                    HorizontalAlignment="Left">Search</Button>
+                    HorizontalAlignment="Left">Save</Button>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="210">
             <DataGrid x:Name="DataGridIngredients" ItemsSource="{Binding IngredientList, UpdateSourceTrigger=PropertyChanged}"
@@ -42,7 +42,7 @@
                       IsReadOnly="False" HeadersVisibility="Column"
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">                
                 <DataGrid.Columns>                   
-                    <DataGridTextColumn Width="*" IsReadOnly="False" Header="Ingredient" Binding="{Binding}"/>                    
+                    <DataGridTextColumn Width="*" IsReadOnly="False" Header="Ingredient" Binding="{Binding Mode=OneWay}"/>                    
                 <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

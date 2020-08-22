@@ -10,7 +10,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
     class SearchIngredientsViewModel : ViewModelBase
     {
         SearchIngredients searchIngredients;
-        
+
         private ObservableCollection<string> ingredientList;
         public ObservableCollection<string> IngredientList
         {
@@ -137,7 +137,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 IngredientList.Add(Ingredient);
             }
         }
-        
+
         private bool CanAddIngredientExecute()
         {
             return true;
@@ -153,21 +153,18 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 try
                 {
-                    MessageBoxResult result = MessageBox.Show("Are you sure you want to search this ingredients?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (result == MessageBoxResult.Yes)
+                    MessageBoxResult result = MessageBox.Show("Next click on button for search.", "Notification");
+                    foreach (var item in IngredientList)
                     {
-                        foreach (var item in IngredientList)
-                        {
-                            SearchIngredients.ingredientsToSearch.Add(item);
-                        }
-                        searchIngredients.Close();
+                        SearchIngredients.ingredientsToSearch.Add(item);
                     }
+                    searchIngredients.Close();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
-            }           
+            }
         }
         private bool CanSearchExecute()
         {
@@ -180,7 +177,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 if (Ingredient != null)
                 {
-                    IngredientList.Remove(Ingredient);                   
+                    IngredientList.Remove(Ingredient);
                 }
             }
             catch (Exception ex)

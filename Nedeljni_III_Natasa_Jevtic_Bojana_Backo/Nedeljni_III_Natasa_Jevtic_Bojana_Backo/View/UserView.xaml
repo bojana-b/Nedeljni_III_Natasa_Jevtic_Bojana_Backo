@@ -27,7 +27,7 @@
             <RowDefinition Height="6"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="6"/>
-            <RowDefinition Height="auto"/>            
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.Row="1" Height="auto" Width="auto">
@@ -37,21 +37,22 @@
         </Grid>
         <Grid Grid.Column="1" Grid.Row="9" Height="auto" Width="auto">
             <Button Width="110" Command="{Binding AddNewRecipe}">Add new recipe</Button>
-        </Grid>        
+        </Grid>
         <Grid Grid.Column="3" Grid.Row="1" Height="auto" Width="auto">
             <Button Background="RosyBrown" Foreground="White" Width="80"
                 Command="{Binding Cancel}">Log Out</Button>
         </Grid>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
             <TextBlock Margin="10,0">Search by name:</TextBlock>
-            <TextBlock Margin="40,0">Search by type:</TextBlock>            
+            <TextBlock Margin="40,0">Search by type:</TextBlock>
         </StackPanel>
         <TextBlock Grid.Column="3" Grid.Row="3" Margin="10,0">Search by ingredients:</TextBlock>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
             <TextBox Margin="5,0" Name="txtFilter" TextChanged="txtFilter_TextChanged" Width="120" />
-            <TextBox Margin="25,0" Name="txtFilter1" TextChanged="txtFilter_TextChanged" Width="120" />            
+            <TextBox Margin="25,0" Name="txtFilter1" TextChanged="txtFilter_TextChanged" Width="120" />
         </StackPanel>
-        <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Command="{Binding SearchByIngedients}">Search</Button>
+        <Button Grid.Column="3" Grid.Row="5" Width="20" Command="{Binding SearchByIngedients}" Margin="0,0,90,0">+</Button>
+        <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Click="searchButtonClick" Margin="50,0,0,0">Search</Button>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
             <DockPanel>
                 <ListView DockPanel.Dock="Top" Name="lvUsers"
@@ -61,7 +62,7 @@
                             <Setter Property="HorizontalContentAlignment" Value="Left" />
                         </Style>
                     </ListView.Resources>
-                    <ListView.View>                        
+                    <ListView.View>
                         <GridView>
                             <GridViewColumn Width="auto" DisplayMemberBinding="{Binding RecipeName}" >
                                 <GridViewColumn.Header>
@@ -77,12 +78,12 @@
                                 <GridViewColumn.Header>
                                     <GridViewColumnHeader Tag="NumberOfPersons" Click="lvUsersColumnHeader_Click">Number Of Persons</GridViewColumnHeader>
                                 </GridViewColumn.Header>
-                            </GridViewColumn>                           
+                            </GridViewColumn>
                         </GridView>
-                    </ListView.View>                    
+                    </ListView.View>
                 </ListView>
             </DockPanel>
         </Grid>
-        <Button Grid.Column="3" Grid.Row="7" Content="Edit" Command="{Binding Edit}" Height="25" Width="90"/>        
+        <Button Grid.Column="3" Grid.Row="7" Content="Edit" Command="{Binding Edit}" Height="25" Width="90"/>
     </Grid>
 </Window>

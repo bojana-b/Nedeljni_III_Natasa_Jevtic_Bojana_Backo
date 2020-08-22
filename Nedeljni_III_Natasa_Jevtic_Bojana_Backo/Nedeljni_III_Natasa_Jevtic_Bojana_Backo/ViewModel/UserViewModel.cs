@@ -160,7 +160,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         private bool CanSearchByIngedientsExecute()
         {
             return true;
-            }
+        }
 
         private ICommand edit;
         public ICommand Edit
