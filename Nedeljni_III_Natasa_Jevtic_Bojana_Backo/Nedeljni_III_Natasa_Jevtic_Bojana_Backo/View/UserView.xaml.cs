@@ -45,13 +45,13 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             if (SearchIngredients.ingredientsToSearch != null && String.IsNullOrEmpty(txtFilter.Text) && String.IsNullOrEmpty(txtFilter1.Text))
             {
                 recipeIngredients();
+                
                 return ((item as vwRecipe).RecipeId.Equals(recipe.RecipeId));
             }
             else if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text))
             {                              
                 return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
-            
             else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
             {
                 return true;
