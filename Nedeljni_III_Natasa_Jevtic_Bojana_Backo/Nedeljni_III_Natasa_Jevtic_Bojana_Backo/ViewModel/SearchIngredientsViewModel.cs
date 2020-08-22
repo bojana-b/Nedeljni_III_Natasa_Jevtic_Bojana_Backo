@@ -38,7 +38,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 OnPropertyChanged("Ingredient");
             }
         }
-        public string Name { get; set; }
 
         private ICommand cancel;
 
@@ -100,7 +99,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         public SearchIngredientsViewModel(SearchIngredients searchIngredientsOpen)
         {
             searchIngredients = searchIngredientsOpen;
-            IngredientList = new ObservableCollection<string>();            
+            ingredientList = new ObservableCollection<string>();
         }
 
         private void CancelExecute()
@@ -125,15 +124,20 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
 
         private void AddIngredientExecute()
         {
-            if (String.IsNullOrEmpty(Ingredient))
+            if (Ingredient == null || String.IsNullOrEmpty(Ingredient))
             {
                 MessageBox.Show("Please enter name of ingredient.", "Notification");
+            }
+            else if (IngredientList != null && IngredientList.Contains(Ingredient))
+            {
+                MessageBox.Show("You already added this ingredient.", "Notification");
             }
             else
             {
                 IngredientList.Add(Ingredient);
             }
         }
+        
         private bool CanAddIngredientExecute()
         {
             return true;

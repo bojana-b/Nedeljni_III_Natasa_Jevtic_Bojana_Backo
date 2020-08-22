@@ -26,8 +26,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Content="Name"/>
-        <TextBox Text="{Binding Ingredient}"
+        <Label Grid.Column="1" Grid.Row="1" Content="Name:"/>
+        <TextBox Text="{Binding Ingredient}" 
                  Grid.Column="1" Grid.Row="3"
         Width="120" HorizontalAlignment="Left"/>
         <Button Grid.Column="1" Grid.Row="3" Content="+" HorizontalAlignment="Right"
@@ -38,11 +38,11 @@
         <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="210">
             <DataGrid x:Name="DataGridIngredients" ItemsSource="{Binding IngredientList, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding Ingredient, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" HeadersVisibility="Column"
-                      AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Header="Ingredient" Binding="{Binding Ingredient}"/>
-                    <DataGridTemplateColumn>
+                      IsReadOnly="False" HeadersVisibility="Column"
+                      AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">                
+                <DataGrid.Columns>                   
+                    <DataGridTextColumn Width="*" IsReadOnly="False" Header="Ingredient" Binding="{Binding}"/>                    
+                <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="-" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.RemoveIngredient}"/>

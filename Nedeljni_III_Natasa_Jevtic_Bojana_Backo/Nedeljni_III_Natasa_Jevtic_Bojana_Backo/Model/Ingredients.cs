@@ -102,6 +102,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                 Debug.WriteLine("Exception" + ex.Message.ToString());
                 return false;
             }
-        }
+        }       
     }
 }

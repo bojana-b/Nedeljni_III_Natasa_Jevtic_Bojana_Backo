@@ -1,6 +1,5 @@
 ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 
 namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
@@ -16,6 +15,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             InitializeComponent();
             ingredientsToSearch = new List<string>();
             this.DataContext = new SearchIngredientsViewModel(this);            
-        }
+        }        
     }
 }
