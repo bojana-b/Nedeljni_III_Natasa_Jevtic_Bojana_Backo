@@ -1,4 +1,5 @@
 ﻿using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -19,12 +20,8 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         protected void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView((DataContext as AdminViewModel).RecipeList);
-            view.Filter = o => (o as vwRecipe).RecipeName.Contains((sender as TextBox).Text);
-        }
-        protected void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var view = CollectionViewSource.GetDefaultView((DataContext as AdminViewModel).RecipeList);
-            view.Filter = o => (o as vwRecipe).Type.Contains((sender as TextBox).Text);
+            view.Filter = (o => ((o as vwRecipe).RecipeName.IndexOf((txtFilter).Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                && (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }
