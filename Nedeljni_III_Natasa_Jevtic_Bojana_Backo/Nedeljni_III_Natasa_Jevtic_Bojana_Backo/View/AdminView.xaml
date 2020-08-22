@@ -31,10 +31,20 @@
         <Grid Grid.Column="1" Grid.Row="1" Height="auto" Width="auto">
             <TextBlock Foreground="RosyBrown" FontSize="18" Text="WELCOME ADMIN"></TextBlock>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="3" Height="auto" Width="auto">
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock Margin="10,0">Search by name:</TextBlock>
+            <TextBlock Margin="40,0">Search by type:</TextBlock>
+        </StackPanel>
+        <TextBlock Grid.Column="3" Grid.Row="3" Margin="10,0">Search by ingredients:</TextBlock>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+            <TextBox Margin="5,0" TextChanged="TextBox_TextChanged" Width="120" />
+            <TextBox Margin="25,0" TextChanged="TextBox1_TextChanged" Width="120" />
+        </StackPanel>
+        <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Command="{Binding SearchByIngedients}">Search</Button>
+        <Grid Grid.Column="1" Grid.Row="9" Height="auto" Width="auto">
             <Button Margin="90, 10"  Command="{Binding AddNewRecipe}">Add new recipe</Button>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="auto">
+        <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
             <DataGrid x:Name="DataGridResults" ItemsSource="{Binding RecipeList, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">
