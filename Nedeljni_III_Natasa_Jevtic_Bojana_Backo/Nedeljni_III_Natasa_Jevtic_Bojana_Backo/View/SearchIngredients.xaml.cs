@@ -15,6 +15,6 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             InitializeComponent();
             ingredientsToSearch = new List<string>();
             this.DataContext = new SearchIngredientsViewModel(this);            
-        }        
+        }
     }
 }

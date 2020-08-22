@@ -3,6 +3,7 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,11 +23,15 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         public static List<vwRecipe> filteredList = new List<vwRecipe>();
         public List<vwRecipe> items;
         public CollectionView view;
+        public vwIngredient ingredient;
+        public vwRecipe recipe;
         public UserView(vwUser userLogged)
         {
             InitializeComponent();
             this.DataContext = new UserViewModel(this, userLogged);
-            
+
+            ingredient = new vwIngredient();
+            recipe = new vwRecipe();
             Recipes recipes = new Recipes();
             items = new List<vwRecipe>();
             items = recipes.ViewUserRecipes(userLogged);
@@ -37,10 +42,16 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         }
         private bool UserFilter(object item)
         {
-            if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text))
+            if (SearchIngredients.ingredientsToSearch != null && String.IsNullOrEmpty(txtFilter.Text) && String.IsNullOrEmpty(txtFilter1.Text))
+            {
+                recipeIngredients();
+                return ((item as vwRecipe).RecipeId.Equals(recipe.RecipeId));
+            }
+            else if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text))
             {                              
                 return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
+            
             else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
             {
                 return true;
@@ -49,10 +60,39 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
             {
                 return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0
                     && (item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            }            
+            }
+        }
+
+        public vwRecipe recipeIngredients()
+        {
+            try
+            {
+                using (RecipesDBEntities context = new RecipesDBEntities())
+                {
+                    for (int i = 0; i < SearchIngredients.ingredientsToSearch.Count; i++)
+                    {
+                       string name = SearchIngredients.ingredientsToSearch[i];
+                       ingredient = (from e in context.vwIngredients where e.IngredientName == name select e).FirstOrDefault();
+                    }
+                    if (ingredient == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        recipe.RecipeId = ingredient.RecipeId;
+                        return recipe;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
         }
        
-        private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        public void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(lvUsers.ItemsSource).Refresh();
             filteredList = items.Where(i => view.Filter(i)).ToList();
