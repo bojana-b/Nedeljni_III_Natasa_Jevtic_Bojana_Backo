@@ -3,6 +3,7 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -61,6 +62,60 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 recipe = value;
                 OnPropertyChanged("Recipe");
+            }
+        }
+
+        private string ingredientList;
+        public string IngredientList
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                List<string> list = recipes.ViewRecipeIngredients(Recipe);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        stringBuilder.Append(item + "\n");
+                    }
+                    return stringBuilder.ToString();
+                }
+                else
+                {
+                    return null;
+                }                
+            }
+            set
+            {
+                ingredientList = value;
+                OnPropertyChanged("IngredientList");
+            }
+        }
+
+        private string requiredIngredientList;
+        public string RequiredIngredientList
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                List<string> list = recipes.FindRequiredIngredients(recipes.ViewRecipeIngredients(Recipe), SearchIngredients.ingredientsToSearch);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        stringBuilder.Append(item + "\n");
+                    }
+                    return stringBuilder.ToString();
+                }
+                else
+                {
+                    return null;
+                }                
+            }
+            set
+            {
+                requiredIngredientList = value;
+                OnPropertyChanged("RequiredIngredientList");
             }
         }
         #endregion

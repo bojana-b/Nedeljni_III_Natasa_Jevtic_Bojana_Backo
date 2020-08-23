@@ -164,5 +164,70 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                 return false;
             }
         }
+
+        public List<string> ViewRecipeIngredients(vwRecipe recipe)
+        {
+            try
+            {
+                using (RecipesDBEntities context = new RecipesDBEntities())
+                {
+                    if (recipe != null)
+                    {
+                        return context.vwIngredients.Where(x => x.RecipeId == recipe.RecipeId).Select(x => x.IngredientName + " " + x.Quantity).ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }                   
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+        
+        public List<string> FindRequiredIngredients(List<string> allIngredients, List<string> ingredients)
+        {
+            List<string> requiredIngredients = new List<string>();
+            List<string> missingIngredients = new List<string>();
+            List<string> myIngredients = new List<string>();
+            if (allIngredients != null)
+            {
+                foreach (var item in allIngredients)
+                {
+                    char digit = item.Where(x => char.IsDigit(x)).FirstOrDefault();
+                    string ingredientName = (item.Split(digit))[0].TrimEnd(' ');
+                    requiredIngredients.Add(ingredientName);
+                    missingIngredients.Add(ingredientName);
+                }
+                if (ingredients != null)
+                {
+                    foreach (var item in ingredients)
+                    {
+                        char digit = item.Where(x => char.IsDigit(x)).FirstOrDefault();
+                        string ingredientName = (item.Split(digit))[0].TrimEnd(' ');
+                        myIngredients.Add(ingredientName);
+                    }
+                    for (int i = 0; i < myIngredients.Count; i++)
+                    {
+                        if (allIngredients.Contains(myIngredients[i]))
+                        {
+                            missingIngredients.Remove(myIngredients[i]);
+                        }
+                    }
+                    return missingIngredients;
+                }
+                else
+                {
+                    return missingIngredients;
+                }
+            }
+            else
+            {
+                return null;
+            }               
+        }
     }
 }

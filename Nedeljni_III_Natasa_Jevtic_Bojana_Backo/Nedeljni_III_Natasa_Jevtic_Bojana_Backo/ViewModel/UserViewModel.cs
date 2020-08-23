@@ -3,6 +3,7 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -64,6 +65,60 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                 OnPropertyChanged("Recipe");
             }
         }
+
+        private string ingredientList;
+        public string IngredientList
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                List<string> list = recipes.ViewRecipeIngredients(Recipe);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        stringBuilder.Append(item + "\n");
+                    }
+                    return stringBuilder.ToString();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            set
+            {
+                ingredientList = value;
+                OnPropertyChanged("IngredientList");                
+            }
+        }
+
+        private string requiredIngredientList;
+        public string RequiredIngredientList
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                List<string> list = recipes.FindRequiredIngredients(recipes.ViewRecipeIngredients(Recipe), SearchIngredients.ingredientsToSearch);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        stringBuilder.Append(item + "\n");
+                    }
+                    return stringBuilder.ToString();
+                }
+                else
+                {
+                    return string.Empty;
+                }                
+            }
+            set
+            {
+                requiredIngredientList = value;
+                OnPropertyChanged("RequiredIngredientList");
+            }
+        }
         #endregion
 
         #region Commands
@@ -95,7 +150,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-            }           
+            }
         }
         private bool CanCancelExecute()
         {
@@ -148,15 +203,15 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
         {
             try
             {
-                SearchIngredients searchIngredients = new SearchIngredients();                
-                searchIngredients.ShowDialog();                
+                SearchIngredients searchIngredients = new SearchIngredients();
+                searchIngredients.ShowDialog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
-        
+
         private bool CanSearchByIngedientsExecute()
         {
             return true;
