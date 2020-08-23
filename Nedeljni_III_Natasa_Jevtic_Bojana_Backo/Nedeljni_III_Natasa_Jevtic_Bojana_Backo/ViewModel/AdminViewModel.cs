@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
@@ -251,6 +253,9 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                         {
                             MessageBox.Show("Recipe is deleted.", "Notification", MessageBoxButton.OK);
                             RecipeList = recipes.ViewAllRecipes();
+                            AdminView newAdminView = new AdminView();
+                            adminView.Close();
+                            newAdminView.ShowDialog();
                         }
                         else
                         {
