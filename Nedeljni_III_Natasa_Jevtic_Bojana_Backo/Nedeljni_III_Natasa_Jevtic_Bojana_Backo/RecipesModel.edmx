@@ -130,7 +130,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
           <Property Name="Username" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <Association Name="FK__tblIngred__Recip__59FA5E80">
+        <Association Name="FK__tblIngred__Recip__29572725">
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="1" />
           <End Role="tblIngredients" Type="Self.tblIngredients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -142,7 +142,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblRecipe__UserI__5535A963">
+        <Association Name="FK__tblRecipe__UserI__267ABA7A">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +154,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblShoppi__Recip__5FB337D6">
+        <Association Name="FK__tblShoppi__Recip__2D27B809">
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="1" />
           <End Role="tblShoppingList" Type="Self.tblShoppingList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,7 +166,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblShoppi__UserI__5EBF139D">
+        <Association Name="FK__tblShoppi__UserI__2C3393D0">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
           <End Role="tblShoppingList" Type="Self.tblShoppingList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,19 +230,19 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
     [vwUser].[Password] AS [Password]
     FROM [dbo].[vwUser] AS [vwUser]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__tblIngred__Recip__59FA5E80" Association="Self.FK__tblIngred__Recip__59FA5E80">
+          <AssociationSet Name="FK__tblIngred__Recip__29572725" Association="Self.FK__tblIngred__Recip__29572725">
             <End Role="tblRecipe" EntitySet="tblRecipe" />
             <End Role="tblIngredients" EntitySet="tblIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblRecipe__UserI__5535A963" Association="Self.FK__tblRecipe__UserI__5535A963">
+          <AssociationSet Name="FK__tblRecipe__UserI__267ABA7A" Association="Self.FK__tblRecipe__UserI__267ABA7A">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblRecipe" EntitySet="tblRecipe" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblShoppi__Recip__5FB337D6" Association="Self.FK__tblShoppi__Recip__5FB337D6">
+          <AssociationSet Name="FK__tblShoppi__Recip__2D27B809" Association="Self.FK__tblShoppi__Recip__2D27B809">
             <End Role="tblRecipe" EntitySet="tblRecipe" />
             <End Role="tblShoppingList" EntitySet="tblShoppingList" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblShoppi__UserI__5EBF139D" Association="Self.FK__tblShoppi__UserI__5EBF139D">
+          <AssociationSet Name="FK__tblShoppi__UserI__2C3393D0" Association="Self.FK__tblShoppi__UserI__2C3393D0">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblShoppingList" EntitySet="tblShoppingList" />
           </AssociationSet>
