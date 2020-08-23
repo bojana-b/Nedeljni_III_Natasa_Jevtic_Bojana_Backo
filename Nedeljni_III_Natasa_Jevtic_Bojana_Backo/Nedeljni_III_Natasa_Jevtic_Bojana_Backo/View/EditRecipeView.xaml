@@ -43,7 +43,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Margin="0,18,0,0">Description:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White"
+                <TextBox Background="RosyBrown" Foreground="White" MaxWidth="230"
                          Height="100" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled"
                          VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
                          Text="{Binding Recipe.Description, UpdateSourceTrigger=PropertyChanged}"/>

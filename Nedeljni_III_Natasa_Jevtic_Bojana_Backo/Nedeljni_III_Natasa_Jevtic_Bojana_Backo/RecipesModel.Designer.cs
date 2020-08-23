@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Natasa Jevtic\Desktop\final.NET\git\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\RecipesModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\panonit\Documents\GitHub\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\Nedeljni_III_Natasa_Jevtic_Bojana_Backo\RecipesModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
