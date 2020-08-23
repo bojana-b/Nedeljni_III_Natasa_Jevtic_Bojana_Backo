@@ -212,7 +212,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model
                     }
                     for (int i = 0; i < myIngredients.Count; i++)
                     {
-                        if (allIngredients.Contains(myIngredients[i]))
+                        if (requiredIngredients.Contains(myIngredients[i]))
                         {
                             missingIngredients.Remove(myIngredients[i]);
                         }
