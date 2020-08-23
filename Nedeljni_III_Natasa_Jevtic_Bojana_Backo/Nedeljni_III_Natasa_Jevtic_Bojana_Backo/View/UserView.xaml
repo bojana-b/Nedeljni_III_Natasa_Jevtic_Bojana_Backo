@@ -54,36 +54,37 @@
         <Button Grid.Column="3" Grid.Row="5" Width="20" Command="{Binding SearchByIngedients}" Margin="0,0,90,0">+</Button>
         <Button Grid.Column="3" Grid.Row="5" x:Name="btnSearch" Width="90" Click="searchButtonClick" Margin="50,0,0,0">Search</Button>
         <Grid Grid.Column="1" Grid.Row="7" Height="auto" Width="auto">
-            <DockPanel>
-                <ListView DockPanel.Dock="Top" Name="lvUsers"
-                    ItemsSource="{Binding filteredList}" SelectedItem="{Binding Recipe}">
-                    <ListView.Resources>
-                        <Style TargetType="{x:Type GridViewColumnHeader}">
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding RecipeName}" >
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="RecipeName" Click="lvUsersColumnHeader_Click">Recipe Name</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Type}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="Type" Click="lvUsersColumnHeader_Click">Recipe Type</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding NumberOfPersons}">
-                                <GridViewColumn.Header>
-                                    <GridViewColumnHeader Tag="NumberOfPersons" Click="lvUsersColumnHeader_Click">Number Of Persons</GridViewColumnHeader>
-                                </GridViewColumn.Header>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </DockPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="91*"/>
+                <ColumnDefinition Width="270*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Height="auto" Width="auto" Grid.ColumnSpan="2">
+                <DataGrid x:Name="DataGridResults" ItemsSource="{Binding RecipeList, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Recipe, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
+                      AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Recipe Name" Binding="{Binding RecipeName}"/>
+                        <DataGridTextColumn Header="Recipe Type" Binding="{Binding Type}"/>
+                        <DataGridTextColumn Header="Number Of Persons" Binding="{Binding NumberOfPersons}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Action" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button x:Name="editBtn" Content="Edit" HorizontalAlignment="Center"
+                                            Command="{Binding DataContext.Edit, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
+                                        UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Grid>
-        <Button Grid.Column="3" Grid.Row="7" Content="Edit" Command="{Binding Edit}" Height="25" Width="90"/>
     </Grid>
 </Window>

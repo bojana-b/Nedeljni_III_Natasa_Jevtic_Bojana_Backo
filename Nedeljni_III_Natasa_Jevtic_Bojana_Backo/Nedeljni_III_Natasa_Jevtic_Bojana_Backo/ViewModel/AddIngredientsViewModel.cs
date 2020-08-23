@@ -192,7 +192,18 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     if (isCanceled == true)
                     {
                         MessageBox.Show("Creating recipe is canceled.", "Notification", MessageBoxButton.OK);
-                        addIngredients.Close();
+                        if (recipe.Author == "Administrator")
+                        {
+                            AdminView adminView = new AdminView();
+                            addIngredients.Close();
+                            adminView.ShowDialog();
+                        }
+                        else
+                        {
+                            UserView userView = new UserView(users.FindUser(recipe.UserId));
+                            addIngredients.Close();
+                            userView.ShowDialog();
+                        }
                     }
                     else
                     {

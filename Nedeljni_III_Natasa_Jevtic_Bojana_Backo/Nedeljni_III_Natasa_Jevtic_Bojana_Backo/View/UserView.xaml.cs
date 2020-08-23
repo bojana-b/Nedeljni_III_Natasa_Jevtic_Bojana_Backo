@@ -18,9 +18,7 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
     /// </summary>
     public partial class UserView : Window
     {
-        private GridViewColumnHeader listViewSortCol = null;
-        private SortAdorner listViewSortAdorner = null;
-        public static List<vwRecipe> filteredList = new List<vwRecipe>();
+        public static List<vwRecipe> filteredList;
         public List<vwRecipe> items;
         public CollectionView view;
         public string ingredient;
@@ -36,43 +34,45 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
 
             recipe = new vwRecipe();
             Recipes recipes = new Recipes();
-            items = new List<vwRecipe>();
-            items = recipes.ViewUserRecipes(userLogged);
-            lvUsers.ItemsSource = items;
-            view = (CollectionView)CollectionViewSource.GetDefaultView(lvUsers.ItemsSource);
-            view.Filter = UserFilter;
             filteredList = new List<vwRecipe>();
             filteredRecipes = new List<vwRecipe>();
+            SearchIngredients.ingredientsToSearch = new List<string>();
+            items = new List<vwRecipe>();
+            items = recipes.ViewUserRecipes(userLogged);
+            DataGridResults.ItemsSource = items;
+            view = (CollectionView)CollectionViewSource.GetDefaultView(DataGridResults.ItemsSource);
+            view.Filter = UserFilter;
         }
         private bool UserFilter(object item)
         {
-            if (SearchIngredients.ingredientsToSearch != null && String.IsNullOrEmpty(txtFilter.Text) && String.IsNullOrEmpty(txtFilter1.Text))
+            if (SearchIngredients.ingredientsToSearch.Count != 0 && String.IsNullOrEmpty(txtFilter.Text) && String.IsNullOrEmpty(txtFilter1.Text))
             {
                 return recipeIngredients(item);
             }
-            else if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text) && SearchIngredients.ingredientsToSearch == null)
+            else if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text) && SearchIngredients.ingredientsToSearch.Count == 0)
             {
                 return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch.Count == 0)
+            {
+                return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch.Count == 0)
+            {
+                return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0 && ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0));
+            }
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch.Count != 0)
+            {
+                return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0 && recipeIngredients(item));
+            }
+            else if ((String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3) && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch.Count != 0)
+            {
+                return (recipeIngredients(item) && ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0));
             }
             else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
             {
                 return true;
-            }
-            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch == null)
-            {
-                return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
-            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch == null)
-            {
-                return ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0 && ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0));
-            }
-            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch != null)
-            {
-                return ((item as vwRecipe).RecipeName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0 && recipeIngredients(item));
-            }
-            else if ((String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3) && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch != null)
-            {
-                return (recipeIngredients(item) && ((item as vwRecipe).Type.IndexOf(txtFilter1.Text, StringComparison.OrdinalIgnoreCase) >= 0));
             }
             else
             {
@@ -116,72 +116,14 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
 
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            CollectionViewSource.GetDefaultView(lvUsers.ItemsSource).Refresh();
+            CollectionViewSource.GetDefaultView(DataGridResults.ItemsSource).Refresh();
             filteredList = items.Where(i => view.Filter(i)).ToList();
         }
 
         private void searchButtonClick(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource.GetDefaultView(lvUsers.ItemsSource).Refresh();
+            CollectionViewSource.GetDefaultView(DataGridResults.ItemsSource).Refresh();
             filteredList = items.Where(i => view.Filter(i)).ToList();
-        }
-
-        private void lvUsersColumnHeader_Click(object sender, RoutedEventArgs e)
-        {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
-            string sortBy = column.Tag.ToString();
-            if (listViewSortCol != null)
-            {
-                AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                lvUsers.Items.SortDescriptions.Clear();
-            }
-
-            ListSortDirection newDir = ListSortDirection.Ascending;
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
-                newDir = ListSortDirection.Descending;
-
-            listViewSortCol = column;
-            listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
-            AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            lvUsers.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
-        }
-    }
-    public class SortAdorner : Adorner
-    {
-        private static Geometry ascGeometry =
-            Geometry.Parse("M 0 4 L 3.5 0 L 7 4 Z");
-
-        private static Geometry descGeometry =
-            Geometry.Parse("M 0 0 L 3.5 4 L 7 0 Z");
-
-        public ListSortDirection Direction { get; private set; }
-
-        public SortAdorner(UIElement element, ListSortDirection dir)
-            : base(element)
-        {
-            this.Direction = dir;
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            base.OnRender(drawingContext);
-
-            if (AdornedElement.RenderSize.Width < 20)
-                return;
-
-            TranslateTransform transform = new TranslateTransform
-                (
-                    AdornedElement.RenderSize.Width - 15,
-                    (AdornedElement.RenderSize.Height - 5) / 2
-                );
-            drawingContext.PushTransform(transform);
-
-            Geometry geometry = ascGeometry;
-            if (this.Direction == ListSortDirection.Descending)
-                geometry = descGeometry;
-            drawingContext.DrawGeometry(Brushes.Black, null, geometry);
-
-            drawingContext.Pop();
         }
     }
 }
