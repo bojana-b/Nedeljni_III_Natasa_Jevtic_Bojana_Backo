@@ -37,8 +37,38 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View
         protected void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView((DataContext as AdminViewModel).RecipeList);
-            view.Filter = (o => ((o as vwRecipe).RecipeName.IndexOf((txtFilter).Text, StringComparison.OrdinalIgnoreCase) >= 0)
-                && (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0 && recipeIngredients(o as vwRecipe));
+            if (SearchIngredients.ingredientsToSearch != null && String.IsNullOrEmpty(txtFilter.Text) && String.IsNullOrEmpty(txtFilter1.Text))
+            {
+                view.Filter = (o => recipeIngredients(o as vwRecipe));
+            }
+            else if (!String.IsNullOrEmpty(txtFilter1.Text) && String.IsNullOrEmpty(txtFilter.Text) && SearchIngredients.ingredientsToSearch == null)
+            {
+                view.Filter = (o => (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3)
+            {
+                //view.Filter = (o => (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch == null)
+            {
+                view.Filter = (o => (o as vwRecipe).RecipeName.IndexOf((txtFilter).Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch == null)
+            {
+                view.Filter = (o => (o as vwRecipe).RecipeName.IndexOf((txtFilter).Text, StringComparison.OrdinalIgnoreCase) >= 0
+                && (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+            else if (!String.IsNullOrEmpty(txtFilter.Text) && txtFilter.Text.Length >= 3 && String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch != null)
+            {
+                view.Filter = (o => (o as vwRecipe).RecipeName.IndexOf((txtFilter).Text, StringComparison.OrdinalIgnoreCase) >= 0
+                && recipeIngredients(o as vwRecipe));
+            }
+            else 
+            {
+                view.Filter = (o => (o as vwRecipe).Type.IndexOf((txtFilter1).Text, StringComparison.OrdinalIgnoreCase) >= 0
+                && recipeIngredients(o as vwRecipe));
+            }
+            //if ((String.IsNullOrEmpty(txtFilter.Text) || txtFilter.Text.Length < 3) && !String.IsNullOrEmpty(txtFilter1.Text) && SearchIngredients.ingredientsToSearch != null)
         }
 
         private void searchButtonClick(object sender, RoutedEventArgs e)
