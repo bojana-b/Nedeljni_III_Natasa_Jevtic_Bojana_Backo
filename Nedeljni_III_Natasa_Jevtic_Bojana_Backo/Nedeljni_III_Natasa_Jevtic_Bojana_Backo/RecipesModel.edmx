@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RecipesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RecipesDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblIngredients">
           <Key>
             <PropertyRef Name="IngredientId" />
           </Key>
           <Property Name="IngredientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IngredientName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Quantity" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="RecipeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tblRecipe">
@@ -70,7 +70,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwIngredients' does not have a prima
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="IngredientId" Type="int" Nullable="false" />
           <Property Name="IngredientName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Quantity" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="8" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'RecipesDB.dbo.vwRecipe' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -113,7 +113,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwShoppingList' does not have a prim
           <Property Name="RecipeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IngredientId" Type="int" Nullable="false" />
           <Property Name="IngredientName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Quantity" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="RecipeId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -130,7 +130,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
           <Property Name="Username" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <Association Name="FK__tblIngred__Recip__267ABA7A">
+        <Association Name="FK__tblIngred__Recip__59FA5E80">
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="1" />
           <End Role="tblIngredients" Type="Self.tblIngredients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -142,7 +142,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblRecipe__UserI__21B6055D">
+        <Association Name="FK__tblRecipe__UserI__5535A963">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +154,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblShoppi__Recip__2C3393D0">
+        <Association Name="FK__tblShoppi__Recip__5FB337D6">
           <End Role="tblRecipe" Type="Self.tblRecipe" Multiplicity="1" />
           <End Role="tblShoppingList" Type="Self.tblShoppingList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,7 +166,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblShoppi__UserI__2B3F6F97">
+        <Association Name="FK__tblShoppi__UserI__5EBF139D">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
           <End Role="tblShoppingList" Type="Self.tblShoppingList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,25 +230,24 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
     [vwUser].[Password] AS [Password]
     FROM [dbo].[vwUser] AS [vwUser]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__tblIngred__Recip__267ABA7A" Association="Self.FK__tblIngred__Recip__267ABA7A">
+          <AssociationSet Name="FK__tblIngred__Recip__59FA5E80" Association="Self.FK__tblIngred__Recip__59FA5E80">
             <End Role="tblRecipe" EntitySet="tblRecipe" />
             <End Role="tblIngredients" EntitySet="tblIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblRecipe__UserI__21B6055D" Association="Self.FK__tblRecipe__UserI__21B6055D">
+          <AssociationSet Name="FK__tblRecipe__UserI__5535A963" Association="Self.FK__tblRecipe__UserI__5535A963">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblRecipe" EntitySet="tblRecipe" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblShoppi__Recip__2C3393D0" Association="Self.FK__tblShoppi__Recip__2C3393D0">
+          <AssociationSet Name="FK__tblShoppi__Recip__5FB337D6" Association="Self.FK__tblShoppi__Recip__5FB337D6">
             <End Role="tblRecipe" EntitySet="tblRecipe" />
             <End Role="tblShoppingList" EntitySet="tblShoppingList" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblShoppi__UserI__2B3F6F97" Association="Self.FK__tblShoppi__UserI__2B3F6F97">
+          <AssociationSet Name="FK__tblShoppi__UserI__5EBF139D" Association="Self.FK__tblShoppi__UserI__5EBF139D">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblShoppingList" EntitySet="tblShoppingList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RecipesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -258,7 +257,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
           </Key>
           <Property Name="IngredientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IngredientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="RecipeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblRecipe" Relationship="Self.FK__tblIngred__Recip__267ABA7A" FromRole="tblIngredients" ToRole="tblRecipe" />
         </EntityType>
@@ -323,7 +322,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="IngredientId" Type="Int32" Nullable="false" />
           <Property Name="IngredientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="vwRecipe">
           <Key>
@@ -362,7 +361,7 @@ warning 6002: The table/view 'RecipesDB.dbo.vwUser' does not have a primary key 
           <Property Name="RecipeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IngredientId" Type="Int32" Nullable="false" />
           <Property Name="IngredientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="RecipeId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="vwUser">

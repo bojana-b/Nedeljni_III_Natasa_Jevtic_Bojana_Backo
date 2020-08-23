@@ -31,7 +31,7 @@ UserId int FOREIGN KEY REFERENCES tblUser(UserId) NOT NULL
 create table tblIngredients(
 IngredientId int identity(1,1) PRIMARY KEY,
 IngredientName varchar(50) NOT NULL,
-Quantity decimal(4,2) NOT NULL,
+Quantity decimal(8,2) NOT NULL,
 RecipeId int FOREIGN KEY REFERENCES tblRecipe(RecipeId) NOT NULL
 );
 create table tblShoppingList(
