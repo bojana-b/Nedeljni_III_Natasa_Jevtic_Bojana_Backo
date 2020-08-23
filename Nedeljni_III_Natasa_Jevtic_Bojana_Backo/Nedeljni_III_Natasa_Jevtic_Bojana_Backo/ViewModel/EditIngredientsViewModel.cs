@@ -3,6 +3,7 @@ using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.Model;
 using Nedeljni_III_Natasa_Jevtic_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -160,6 +161,11 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             if (String.IsNullOrEmpty(Ingredient.IngredientName) || String.IsNullOrEmpty(Ingredient.Quantity.ToString()) || Ingredient.Quantity == 0)
             {
                 MessageBox.Show("Please fill all fields.", "Notification");
+            }
+            else if (IngredientList != null && (IngredientList.Where(x => x.IngredientName == Ingredient.IngredientName).Any() || 
+                AddedIngredientList.Where(x => x.IngredientName == Ingredient.IngredientName).Any()))
+            {
+                MessageBox.Show("You already added this ingredient.", "Notification");
             }
             else
             {

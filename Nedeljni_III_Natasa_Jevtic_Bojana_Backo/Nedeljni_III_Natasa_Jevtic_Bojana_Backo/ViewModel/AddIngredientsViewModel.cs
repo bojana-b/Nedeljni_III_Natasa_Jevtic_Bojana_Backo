@@ -156,6 +156,10 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
             {
                 MessageBox.Show("Please fill all fields.", "Notification");
             }
+            else if (IngredientList != null && IngredientList.Where(x => x.IngredientName == Ingredient.IngredientName).Any())
+            {
+                MessageBox.Show("You already added this ingredient.", "Notification");
+            }
             else
             {
                 try
@@ -193,6 +197,20 @@ namespace Nedeljni_III_Natasa_Jevtic_Bojana_Backo.ViewModel
                     {
                         MessageBox.Show("Creating recipe is canceled.", "Notification", MessageBoxButton.OK);
                         addIngredients.Close();
+                        if (Recipe.Author == "Administrator")
+                        {
+                            AdminView adminView = new AdminView();
+                            addIngredients.Close();
+                            adminView.ShowDialog();
+
+                        }
+                        else
+                        {
+
+                            UserView userView = new UserView(users.FindUser(recipe.UserId));
+                            addIngredients.Close();
+                            userView.ShowDialog();
+                        }
                     }
                     else
                     {
